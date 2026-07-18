@@ -101,7 +101,7 @@ export default function AuditModal({ isOpen, onClose }: AuditModalProps) {
               <input
                 type="tel"
                 className={styles.formInput}
-                placeholder="e.g. +91 99999 99999"
+                placeholder="e.g. +91 97726 24506"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 required
