@@ -5,15 +5,20 @@ const ServiceSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please add a service title']
   },
-  description: {
+  category: {
+    type: String,
+    enum: ['performance', 'social', 'tech', 'branding'],
+    required: true
+  },
+  desc: {
     type: String,
     required: [true, 'Please add a description']
   },
   icon: {
-    type: String, // icon class or image path
+    type: String, // SVG path string or name
     default: 'default-icon'
   },
-  features: {
+  subservices: {
     type: [String],
     default: []
   },

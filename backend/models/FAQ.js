@@ -1,17 +1,13 @@
 const mongoose = require('mongoose');
 
 const FAQSchema = new mongoose.Schema({
-  question: {
+  q: {
     type: String,
     required: [true, 'Please add a question']
   },
-  answer: {
+  a: {
     type: String,
     required: [true, 'Please add an answer']
-  },
-  category: {
-    type: String,
-    default: 'General'
   },
   createdAt: {
     type: Date,

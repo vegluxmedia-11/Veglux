@@ -5,23 +5,33 @@ const PortfolioSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please add a project title']
   },
-  category: {
+  tag: {
     type: String,
-    required: [true, 'Please add a category']
+    required: [true, 'Please add a tag']
   },
-  description: {
+  desc: {
     type: String,
     required: [true, 'Please add a description']
   },
+  roi: {
+    type: String,
+    required: [true, 'Please add ROI e.g. 8.5x ROAS']
+  },
+  stats: [{
+    label: { type: String, required: true },
+    value: { type: String, required: true }
+  }],
+  chartHeights: {
+    type: [Number],
+    required: true
+  },
   image: {
     type: String,
-    required: [true, 'Please add an image']
+    default: 'no-image.jpg'
   },
   link: {
     type: String
   },
-  clientName: String,
-  technologies: [String],
   createdAt: {
     type: Date,
     default: Date.now

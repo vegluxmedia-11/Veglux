@@ -11,20 +11,20 @@ const LeadSchema = new mongoose.Schema({
   },
   phone: String,
   company: String,
-  message: {
-    type: String
-  },
-  type: {
+  service: {
     type: String,
-    enum: ['contact', 'audit'],
-    default: 'contact'
+    enum: ['performance', 'social', 'seo', 'webdev', 'branding'],
+    default: 'performance'
+  },
+  message: {
+    type: String,
+    required: [true, 'Please add a message/description']
   },
   status: {
     type: String,
     enum: ['new', 'contacted', 'closed'],
     default: 'new'
   },
-  websiteUrl: String, // Specifically for Audit requests
   createdAt: {
     type: Date,
     default: Date.now

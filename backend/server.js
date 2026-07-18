@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 
 // Load env vars
-dotenv.config();
+dotenv.config({ override: true });
 
 // Connect to database
 connectDB();
@@ -26,6 +26,7 @@ app.use('/api/portfolio', require('./routes/portfolios'));
 app.use('/api/services', require('./routes/services'));
 app.use('/api/testimonials', require('./routes/testimonials'));
 app.use('/api/pricing', require('./routes/pricingplans'));
+app.use('/api/customservices', require('./routes/customservices'));
 app.use('/api/leads', require('./routes/leads'));
 app.use('/api/faqs', require('./routes/faqs'));
 

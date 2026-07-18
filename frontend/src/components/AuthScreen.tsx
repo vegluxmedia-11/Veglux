@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./AuthScreen.module.css";
 import Logo from "./Logo";
+import api from "../lib/api";
 
 interface AuthScreenProps {
   onLoginSuccess: () => void;
@@ -34,7 +35,7 @@ export default function AuthScreen({ onLoginSuccess, theme, toggleTheme }: AuthS
     }
   }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
@@ -43,22 +44,26 @@ export default function AuthScreen({ onLoginSuccess, theme, toggleTheme }: AuthS
       return;
     }
 
-    // Bypass check: allow default credentials, OR any input for a seamless prototype test!
-    const isDefault = email.toLowerCase() === "luckyjoshi@vegluxmedia.com" && password === "password123";
-    const isAnyInput = email.includes("@") && password.length >= 4;
+    try {
+      // PRO MODE: Using Axios instance
+      const { data } = await api.post('/auth/login', { email, password });
 
-    if (isDefault || isAnyInput) {
-      setSuccess("Success! Logging in...");
-      setTimeout(() => {
+      if (data.success) {
+        setSuccess("Success! Logging in...");
+        localStorage.setItem("veglux_token", data.token);
         localStorage.setItem("veglux_logged_in", "true");
-        onLoginSuccess();
-      }, 1000);
-    } else {
-      setError("Please enter a valid email address and a password of at least 4 characters.");
+        setTimeout(() => {
+          onLoginSuccess();
+        }, 1000);
+      } else {
+        setError(data.error || "Invalid credentials");
+      }
+    } catch (err: any) {
+      setError(err.response?.data?.error || "Error connecting to server. Is the backend running?");
     }
   };
 
-  const handleSignup = (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setSuccess("");
@@ -68,22 +73,29 @@ export default function AuthScreen({ onLoginSuccess, theme, toggleTheme }: AuthS
       return;
     }
 
-    const newUser = {
-      name,
-      email,
-      password,
-      company: company || "N/A",
-    };
+    try {
+      // PRO MODE: Using Axios instance
+      const { data } = await api.post('/auth/register', { 
+        name, 
+        email, 
+        password, 
+        company: company || "N/A" 
+      });
 
-    localStorage.setItem("veglux_user", JSON.stringify(newUser));
-    setSuccess("Account created successfully! Switching to Login...");
-    
-    setTimeout(() => {
-      setActiveTab("login");
-      setEmail(email);
-      setPassword(password);
-      setSuccess("");
-    }, 1500);
+      if (data.success) {
+        setSuccess("Account saved to MongoDB! Switching to Login...");
+        setTimeout(() => {
+          setActiveTab("login");
+          setEmail(email);
+          setPassword(password);
+          setSuccess("");
+        }, 1500);
+      } else {
+        setError(data.error || "Failed to register");
+      }
+    } catch (err: any) {
+      setError(err.response?.data?.error || "Error connecting to server. Is the backend running?");
+    }
   };
 
   const handleGoogleSignIn = () => {

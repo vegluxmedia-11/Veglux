@@ -27,9 +27,16 @@ const BlogSchema = new mongoose.Schema({
     type: String,
     default: 'no-photo.jpg'
   },
-  tags: {
-    type: [String],
-    default: []
+  tag: {
+    type: String,
+    default: 'General'
+  },
+  date: {
+    type: String, // String to match frontend e.g. "July 12, 2026"
+    default: () => {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      return new Date().toLocaleDateString('en-US', options);
+    }
   },
   createdAt: {
     type: Date,

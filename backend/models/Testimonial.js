@@ -1,23 +1,41 @@
 const mongoose = require('mongoose');
 
 const TestimonialSchema = new mongoose.Schema({
-  clientName: {
+  type: {
+    type: String,
+    enum: ['text', 'video'],
+    default: 'text'
+  },
+  name: {
     type: String,
     required: [true, 'Please add client name']
   },
   company: {
     type: String
   },
-  review: {
-    type: String,
-    required: [true, 'Please add a review text']
+  
+  // Fields for text testimonials
+  text: {
+    type: String
   },
-  rating: {
+  stars: {
     type: Number,
     min: 1,
     max: 5,
     default: 5
   },
+  initials: {
+    type: String
+  },
+
+  // Fields for video testimonials
+  subtitles: {
+    type: [String]
+  },
+  videoUrl: {
+    type: String
+  },
+  
   image: {
     type: String,
     default: 'no-avatar.jpg'

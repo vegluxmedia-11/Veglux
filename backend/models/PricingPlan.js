@@ -1,26 +1,30 @@
 const mongoose = require('mongoose');
 
 const PricingPlanSchema = new mongoose.Schema({
-  name: {
+  title: {
     type: String,
-    required: [true, 'Please add a plan name (e.g. Basic, Pro)']
+    required: [true, 'Please add a plan title (e.g. Starter, Premium)']
+  },
+  desc: {
+    type: String,
+    required: [true, 'Please add a short description']
   },
   price: {
-    type: Number,
-    required: [true, 'Please add a price']
-  },
-  currency: {
     type: String,
-    default: '$'
+    required: [true, 'Please add a price string (e.g. ₹25,000)']
   },
-  features: {
-    type: [String],
-    required: true
-  },
-  isPopular: {
+  featured: {
     type: Boolean,
     default: false
   },
+  ctaText: {
+    type: String,
+    default: 'Get Started'
+  },
+  features: [{
+    name: { type: String, required: true },
+    included: { type: Boolean, default: true }
+  }],
   createdAt: {
     type: Date,
     default: Date.now

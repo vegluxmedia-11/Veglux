@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import styles from "./Contact.module.css";
+import api from "../lib/api";
 
 interface ContactProps {
   prefilledMessage?: string;
@@ -31,7 +32,7 @@ export default function Contact({ prefilledMessage, onClearPrefill }: ContactPro
     }
   }, [prefilledMessage, onClearPrefill]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus(null);
 
@@ -42,20 +43,40 @@ export default function Contact({ prefilledMessage, onClearPrefill }: ContactPro
 
     setIsSubmitting(true);
 
-    // Simulate API Submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setStatus({
-        type: "success",
-        text: "Thank you! Lucky Joshi or a dedicated manager will contact you within 2 hours.",
+    try {
+      // Real API Submission to Node.js
+      const { data } = await api.post('/leads', {
+        name,
+        email,
+        phone,
+        company,
+        service,
+        message
       });
-      setName("");
-      setEmail("");
-      setPhone("");
-      setCompany("");
-      setService("performance");
-      setMessage("");
-    }, 1500);
+
+      if (data.success) {
+        setStatus({
+          type: "success",
+          text: "Thank you! Lucky Joshi or a dedicated manager will contact you within 2 hours.",
+        });
+        // Clear form
+        setName("");
+        setEmail("");
+        setPhone("");
+        setCompany("");
+        setService("performance");
+        setMessage("");
+      } else {
+        setStatus({ type: "error", text: data.error || "Failed to submit inquiry." });
+      }
+    } catch (err: any) {
+      setStatus({ 
+        type: "error", 
+        text: err.response?.data?.error || "Error connecting to server. Please try again later." 
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
