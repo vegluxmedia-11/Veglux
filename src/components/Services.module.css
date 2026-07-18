@@ -1,0 +1,146 @@
+.services {
+  padding: 100px 0;
+  background-color: var(--card-bg);
+  border-top: 1px solid var(--border);
+  position: relative;
+  z-index: 10;
+  transition: background-color 0.3s ease;
+}
+
+.titleArea {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.titleArea h2 {
+  font-size: 38px;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.titleArea p {
+  color: var(--gold-primary);
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  font-weight: 500;
+}
+
+.filterBar {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 50px;
+  flex-wrap: wrap;
+}
+
+.filterBtn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  padding: 10px 24px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.filterBtn:hover {
+  color: var(--gold-primary);
+  border-color: var(--gold-primary);
+}
+
+.filterBtnActive {
+  background: var(--gold-gradient);
+  color: #0b0b0b;
+  border-color: transparent;
+  font-weight: 600;
+  box-shadow: var(--shadow-gold);
+}
+
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+@media (max-width: 950px) {
+  .servicesGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .servicesGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.serviceCard {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 35px 30px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.serviceCard:hover {
+  border-color: var(--gold-primary);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-gold);
+}
+
+.cardIcon {
+  color: var(--gold-primary);
+  margin-bottom: 20px;
+  display: inline-block;
+  background: rgba(var(--gold-rgb), 0.08);
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardTitle {
+  font-size: 20px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 15px;
+}
+
+.cardDesc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 25px;
+  flex-grow: 1;
+}
+
+.subserviceList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+}
+
+.subserviceItem {
+  font-size: 13px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.subserviceItem svg {
+  color: var(--gold-primary);
+  flex-shrink: 0;
+}

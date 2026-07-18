@@ -1,26 +1,179 @@
-@import "tailwindcss";
+/* Globals CSS for Veglux Media */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Font Family Variables */
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Theme: Dark Mode (Default Luxury Theme) */
+  --background-raw: 11, 11, 11;
+  --background: rgb(var(--background-raw));
+  --card-bg-raw: 18, 18, 18;
+  --card-bg: rgb(var(--card-bg-raw));
+  --foreground: #f5f5f5;
+  --text-primary: #f5f5f5;
+  --text-secondary: #a0a0a0;
+  --text-muted: #666666;
+  
+  /* Gold Color Scheme */
+  --gold-primary: #d4af37;
+  --gold-secondary: #f3e5ab;
+  --gold-dark: #aa861c;
+  --gold-rgb: 212, 175, 55;
+  --gold-gradient: linear-gradient(135deg, #f3e5ab 0%, #d4af37 50%, #aa861c 100%);
+  --gold-gradient-hover: linear-gradient(135deg, #ffffff 0%, #f3e5ab 30%, #d4af37 100%);
+  
+  --border: rgba(var(--gold-rgb), 0.15);
+  --border-hover: rgba(var(--gold-rgb), 0.35);
+  --shadow-gold: 0 8px 32px 0 rgba(var(--gold-rgb), 0.08);
+  --shadow-glow: 0 0 20px rgba(var(--gold-rgb), 0.2);
+  --selection-bg: rgba(var(--gold-rgb), 0.3);
+  --selection-color: #ffffff;
+  
+  /* Status Colors */
+  --success: #2ec4b6;
+  --error: #e63946;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+[data-theme="light"] {
+  /* Theme: Light Mode (Premium Cream & Gold Theme) */
+  --background-raw: 252, 251, 247;
+  --background: rgb(var(--background-raw));
+  --card-bg-raw: 255, 255, 255;
+  --card-bg: rgb(var(--card-bg-raw));
+  --foreground: #1c1b18;
+  --text-primary: #1c1b18;
+  --text-secondary: #6e6b64;
+  --text-muted: #9c9990;
+  
+  /* Gold Color Scheme - Softened for light background */
+  --gold-primary: #c5a059;
+  --gold-secondary: #ecd9b3;
+  --gold-dark: #8e6c2d;
+  --gold-rgb: 197, 160, 89;
+  --gold-gradient: linear-gradient(135deg, #ecd9b3 0%, #c5a059 50%, #8e6c2d 100%);
+  --gold-gradient-hover: linear-gradient(135deg, #ffffff 0%, #ecd9b3 30%, #c5a059 100%);
+  
+  --border: rgba(var(--gold-rgb), 0.25);
+  --border-hover: rgba(var(--gold-rgb), 0.5);
+  --shadow-gold: 0 8px 32px 0 rgba(var(--gold-rgb), 0.06);
+  --shadow-glow: 0 0 20px rgba(var(--gold-rgb), 0.15);
+  --selection-bg: rgba(var(--gold-rgb), 0.2);
+  --selection-color: #1c1b18;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Reset and Core Layout */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-body {
+html, body {
+  background-color: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  min-height: 100%;
+}
+
+::selection {
+  background-color: var(--selection-bg);
+  color: var(--selection-color);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--gold-rgb), 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--gold-rgb), 0.6);
+}
+
+/* Background Luxury Grid */
+.bg-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(var(--gold-rgb), 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(var(--gold-rgb), 0.03) 1px, transparent 1px);
+  pointer-events: none;
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes drawStroke {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes pulseGold {
+  0% { transform: scale(1); opacity: 0.9; box-shadow: 0 0 10px rgba(var(--gold-rgb), 0.2); }
+  50% { transform: scale(1.02); opacity: 1; box-shadow: 0 0 25px rgba(var(--gold-rgb), 0.4); }
+  100% { transform: scale(1); opacity: 0.9; box-shadow: 0 0 10px rgba(var(--gold-rgb), 0.2); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Utility Animations */
+.animate-fade {
+  animation: fadeIn 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+/* Premium Text Gradients */
+.gold-text {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  font-weight: 500;
+}
+
+/* Common UI Helper Classes */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
 }

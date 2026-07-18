@@ -1,0 +1,26 @@
+.logoWrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoImg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+/* Sizing definitions for different placements */
+.small .logoImg {
+  max-height: 50px;
+}
+
+.medium .logoImg {
+  max-height: 110px;
+}
+
+.large .logoImg {
+  max-height: 240px;
+}

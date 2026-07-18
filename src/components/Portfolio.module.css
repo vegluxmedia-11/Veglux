@@ -1,0 +1,296 @@
+.portfolio {
+  padding: 100px 0;
+  background-color: var(--card-bg);
+  border-top: 1px solid var(--border);
+  position: relative;
+  z-index: 10;
+  transition: background-color 0.3s ease;
+}
+
+.titleArea {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.titleArea h2 {
+  font-size: 38px;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.titleArea p {
+  color: var(--gold-primary);
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  font-weight: 500;
+}
+
+.casesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-bottom: 80px;
+}
+
+@media (max-width: 800px) {
+  .casesGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.caseCard {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.caseCard:hover {
+  border-color: var(--gold-primary);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-gold);
+}
+
+.caseVisual {
+  height: 200px;
+  background: linear-gradient(135deg, rgba(var(--gold-rgb), 0.03) 0%, rgba(var(--gold-rgb), 0.12) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.caseTag {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: var(--gold-gradient);
+  color: #0b0b0b;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 5px 12px;
+  border-radius: 4px;
+}
+
+.roiBadge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.85);
+  border: 1.5px solid var(--gold-primary);
+  color: var(--gold-primary);
+  font-size: 14px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 4px;
+  font-family: var(--font-serif);
+}
+
+/* Simulated ROI Charts */
+.chartSimulator {
+  width: 80%;
+  height: 100px;
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  justify-content: center;
+  padding-bottom: 10px;
+}
+
+.chartBar {
+  width: 25px;
+  background: rgba(var(--gold-rgb), 0.2);
+  border-radius: 4px 4px 0 0;
+  transition: all 0.5s ease;
+  position: relative;
+}
+
+.chartBarActive {
+  background: var(--gold-gradient);
+  box-shadow: var(--shadow-glow);
+}
+
+.chartBarLabel {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.caseContent {
+  padding: 30px;
+}
+
+.caseTitle {
+  font-size: 20px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.caseDetails {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.caseStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+}
+
+.statValue {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--gold-primary);
+}
+
+.statLabel {
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+/* Before vs After Interactive Panel */
+.comparisonPanel {
+  background: var(--background);
+  border: 1.5px solid var(--gold-primary);
+  border-radius: 16px;
+  padding: 40px;
+  max-width: 850px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-gold);
+}
+
+@media (max-width: 600px) {
+  .comparisonPanel {
+    padding: 25px 15px;
+  }
+}
+
+.compTitle {
+  text-align: center;
+  font-size: 24px;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+}
+
+.compTabs {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 35px;
+}
+
+.compTabBtn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.compTabActive {
+  background: var(--gold-gradient);
+  color: #0b0b0b;
+  font-weight: 600;
+  border-color: transparent;
+  box-shadow: var(--shadow-glow);
+}
+
+.compBody {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .compBody {
+    grid-template-columns: 1fr;
+  }
+}
+
+.compInfo h4 {
+  font-size: 22px;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.compInfo p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.compPoints {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.compPoint {
+  font-size: 13px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.compPoint svg {
+  flex-shrink: 0;
+}
+
+.compStats {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  padding: 24px;
+  border-radius: 12px;
+}
+
+.compStatRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 12px;
+}
+
+.compStatRow:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.compStatLabel {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.compStatVal {
+  font-size: 18px;
+  font-weight: 600;
+  font-family: var(--font-serif);
+}

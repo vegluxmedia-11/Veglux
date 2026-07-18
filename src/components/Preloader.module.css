@@ -1,0 +1,117 @@
+.preloaderContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #0b0b0b;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.8s cubic-bezier(0.77, 0, 0.175, 1), visibility 0.8s;
+  pointer-events: all;
+}
+
+.fadeOut {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.logoWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.logoSvg {
+  width: 150px;
+  height: 150px;
+  filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.4));
+}
+
+.svgPath {
+  stroke: #d4af37;
+  stroke-width: 2.5;
+  fill: none;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawLine 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.svgFill {
+  fill: url(#goldGradient);
+  opacity: 0;
+  animation: fillIn 1.5s ease-in-out 1.2s forwards;
+}
+
+.brandText {
+  font-family: var(--font-sans);
+  font-size: 24px;
+  letter-spacing: 0.25em;
+  font-weight: 700;
+  color: #ffffff;
+  opacity: 0;
+  transform: translateY(15px);
+  animation: textFadeIn 1s cubic-bezier(0.25, 0.8, 0.25, 1) 1.5s forwards;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.brandSubtext {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  color: #d4af37;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: textFadeIn 1s cubic-bezier(0.25, 0.8, 0.25, 1) 1.8s forwards;
+  text-transform: uppercase;
+}
+
+.progressBar {
+  position: absolute;
+  bottom: 50px;
+  width: 200px;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #aa861c, #d4af37, #f3e5ab);
+  animation: fillProgress 2.2s cubic-bezier(0.1, 0.8, 0.1, 1) forwards;
+}
+
+@keyframes drawLine {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fillIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes textFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fillProgress {
+  to {
+    width: 100%;
+  }
+}

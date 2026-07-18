@@ -1,0 +1,130 @@
+.process {
+  padding: 100px 0;
+  background-color: var(--background);
+  border-top: 1px solid var(--border);
+  position: relative;
+  z-index: 10;
+}
+
+.titleArea {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.titleArea h2 {
+  font-size: 38px;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.titleArea p {
+  color: var(--gold-primary);
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  font-weight: 500;
+}
+
+.timeline {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+.timeline::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  right: 5%;
+  height: 2px;
+  background: var(--border);
+  z-index: 1;
+}
+
+@media (max-width: 800px) {
+  .timeline {
+    flex-direction: column;
+    gap: 40px;
+    padding-left: 20px;
+  }
+  
+  .timeline::after {
+    top: 0;
+    bottom: 0;
+    left: 30px;
+    width: 2px;
+    height: 100%;
+  }
+}
+
+.stepNode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 5;
+  width: 15%;
+}
+
+@media (max-width: 800px) {
+  .stepNode {
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+    gap: 20px;
+  }
+}
+
+.stepBubble {
+  width: 50px;
+  height: 50px;
+  background-color: var(--card-bg);
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold-primary);
+  font-weight: bold;
+  font-size: 18px;
+  font-family: var(--font-serif);
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.stepNode:hover .stepBubble {
+  border-color: var(--gold-primary);
+  background: var(--gold-gradient);
+  color: #0b0b0b;
+  box-shadow: var(--shadow-glow);
+  transform: scale(1.1);
+}
+
+.stepContent {
+  text-align: center;
+}
+
+@media (max-width: 800px) {
+  .stepContent {
+    text-align: left;
+    margin-top: 5px;
+  }
+}
+
+.stepTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.stepDesc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
