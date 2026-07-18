@@ -52,9 +52,6 @@ export default function Footer() {
               <Link href="/portfolio">Portfolio</Link>
             </li>
             <li className={styles.linkItem}>
-              <Link href="/pricing">Pricing</Link>
-            </li>
-            <li className={styles.linkItem}>
               <Link href="/contact">Contact</Link>
             </li>
           </ul>
@@ -65,19 +62,19 @@ export default function Footer() {
           <h4 className={styles.colTitle}>Services</h4>
           <ul className={styles.linksList}>
             <li className={styles.linkItem}>
-              <Link href="/services">Performance Marketing</Link>
+              <Link href="/services/performance-marketing">Performance Marketing</Link>
             </li>
             <li className={styles.linkItem}>
-              <Link href="/services">Social Media Management</Link>
+              <Link href="/services/social-media-management">Social Media Management</Link>
             </li>
             <li className={styles.linkItem}>
-              <Link href="/services">SEO Optimisation</Link>
+              <Link href="/services/search-engine-optimization">SEO Optimisation</Link>
             </li>
             <li className={styles.linkItem}>
-              <Link href="/services">Web Development</Link>
+              <Link href="/services/website-development">Web Development</Link>
             </li>
             <li className={styles.linkItem}>
-              <Link href="/services">Branding & Design</Link>
+              <Link href="/services/branding-and-identity">Branding & Design</Link>
             </li>
           </ul>
         </div>
@@ -106,9 +103,9 @@ export default function Footer() {
             <svg className={styles.contactIcon} width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 00.996.808H12a1 1 0 01.996.808l.548 2.2a1 1 0 01-.94.725H11a2 2 0 01-2-2h-.09A1.65 1.65 0 009 9.09V9a2 2 0 012-2h.09A1.65 1.65 0 0013 5.4v-.09A2 2 0 0115 3h.09A1.65 1.65 0 0017 4.6V5a2 2 0 01-2 2h-.09A1.65 1.65 0 0013 8.6V9a2 2 0 012 2h.09A1.65 1.65 0 0017 9.4V11a2 2 0 01-2 2h-.09A1.65 1.65 0 0013 14.6V15a2 2 0 012 2h.09A1.65 1.65 0 0017 15.4V17a2 2 0 01-2 2" />
             </svg>
-            <span className={styles.contactText}>
-              vegluxmedia.com
-            </span>
+            <a href="https://wa.me/919772624506" target="_blank" rel="noopener noreferrer" className={styles.contactText}>
+              +91 97726 24506
+            </a>
           </div>
         </div>
       </div>

@@ -110,7 +110,7 @@ export default function Contact({ prefilledMessage, onClearPrefill }: ContactPro
                 <span className={styles.whatsappDesc}>Chat directly with our specialists.</span>
               </div>
               <a
-                href="https://wa.me/919999999999?text=Hi%20Veglux%20Media!%20I'd%20like%20to%20discuss%20our%20digital%20marketing%20strategy."
+                href="https://wa.me/919772624506?text=Hi%20Veglux%20Media!%20I'd%20like%20to%20discuss%20our%20digital%20marketing%20strategy."
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -170,7 +170,7 @@ export default function Contact({ prefilledMessage, onClearPrefill }: ContactPro
                     <input
                       type="tel"
                       className={styles.formInput}
-                      placeholder="e.g. +91 98765 43210"
+                      placeholder="e.g. +91 97726 24506"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                     />

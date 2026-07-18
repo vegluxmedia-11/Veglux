@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import styles from "./Services.module.css";
 
 interface ServiceItem {
   id: string;
+  slug: string;
   category: "performance" | "social" | "tech" | "branding";
   title: string;
   desc: string;
@@ -18,6 +20,7 @@ export default function Services() {
   const servicesData: ServiceItem[] = [
     {
       id: "performance",
+      slug: "performance-marketing",
       category: "performance",
       title: "Performance Marketing",
       desc: "Engineered campaigns to drive leads, acquire customers, and generate massive ROAS using advanced paid media strategies.",
@@ -36,6 +39,7 @@ export default function Services() {
     },
     {
       id: "social",
+      slug: "social-media-management",
       category: "social",
       title: "Social Media Management",
       desc: "Organic scale and community building to turn social media scrolls into brand loyalty and organic customer acquisition.",
@@ -54,6 +58,7 @@ export default function Services() {
     },
     {
       id: "seo",
+      slug: "search-engine-optimization",
       category: "tech",
       title: "Search Engine Optimization",
       desc: "Technical audits, authority building, and content optimizations to secure top rankings on Google and capture inbound traffic.",
@@ -72,6 +77,7 @@ export default function Services() {
     },
     {
       id: "webdev",
+      slug: "website-development",
       category: "tech",
       title: "Website Development",
       desc: "Creating visually stunning, lightning-fast web applications and e-commerce platforms optimized for conversion.",
@@ -90,6 +96,7 @@ export default function Services() {
     },
     {
       id: "branding",
+      slug: "branding-and-identity",
       category: "branding",
       title: "Branding & Identity",
       desc: "Defining your brand's voice, visuals, and premium positioning to stand out in crowded competitive spaces.",
@@ -108,6 +115,7 @@ export default function Services() {
     },
     {
       id: "email",
+      slug: "email-marketing",
       category: "performance",
       title: "Email Marketing",
       desc: "Nurturing subscribers, building brand trust, and driving automated sales backflows through smart drip funnels.",
@@ -177,7 +185,11 @@ export default function Services() {
         {/* Grid List */}
         <div className={styles.servicesGrid}>
           {filteredServices.map((service) => (
-            <div key={service.id} className={styles.serviceCard}>
+            <Link
+              key={service.id}
+              href={`/services/${service.slug}`}
+              className={styles.serviceCard}
+            >
               <div className={styles.cardIcon}>{service.icon}</div>
               <h3 className={styles.cardTitle}>{service.title}</h3>
               <p className={styles.cardDesc}>{service.desc}</p>
@@ -202,7 +214,13 @@ export default function Services() {
                   </li>
                 ))}
               </ul>
-            </div>
+              <div className={styles.detailBtn}>
+                <span>Explore Full Details</span>
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </div>
+            </Link>
           ))}
         </div>
       </div>

@@ -10,6 +10,8 @@
   display: block;
   object-fit: contain;
   transition: all 0.3s ease;
+  mix-blend-mode: screen;
+  filter: contrast(1.05);
 }
 
 /* Sizing definitions for different placements */

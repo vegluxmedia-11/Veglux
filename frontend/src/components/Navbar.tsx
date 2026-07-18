@@ -71,12 +71,6 @@ export default function Navbar({ theme, toggleTheme, onLogout, onOpenAudit }: Na
               Portfolio
             </Link>
             <Link
-              href="/pricing"
-              className={`${styles.navLink} ${isActive("/pricing") ? styles.navLinkActive : ""}`}
-            >
-              Pricing
-            </Link>
-            <Link
               href="/contact"
               className={`${styles.navLink} ${isActive("/contact") ? styles.navLinkActive : ""}`}
             >
@@ -167,13 +161,6 @@ export default function Navbar({ theme, toggleTheme, onLogout, onOpenAudit }: Na
           onClick={() => setIsMobileMenuOpen(false)}
         >
           Portfolio
-        </Link>
-        <Link
-          href="/pricing"
-          className={`${styles.navLink} ${isActive("/pricing") ? styles.navLinkActive : ""}`}
-          onClick={() => setIsMobileMenuOpen(false)}
-        >
-          Pricing
         </Link>
         <Link
           href="/contact"
