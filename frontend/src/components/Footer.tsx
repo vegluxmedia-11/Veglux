@@ -18,21 +18,28 @@ export default function Footer() {
             Udaipur's luxury digital marketing agency. Driving client growth, scaling performance marketing, and executing transparent campaigns since inception.
           </p>
           <div className={styles.socialLinks}>
-            <a href="#" className={styles.socialIcon} aria-label="LinkedIn">
+            <a
+              href="https://www.instagram.com/vegluxmedia?igsh=MWU0bGN1OGs0bmtzNA=="
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.socialIcon}
+              aria-label="Instagram"
+            >
               <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A2.396 2.396 0 0118.604 15.65H16.03V22h-3.41v-6.35h-2.52v-2.91h2.52v-2.07c0-2.5 1.52-3.87 3.75-3.87 1.07 0 2 .08 2.27.12v2.62h-1.55c-1.21 0-1.45.58-1.45 1.42v1.88h2.91l-.38 2.91z" />
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" />
               </svg>
             </a>
-            <a href="#" className={styles.socialIcon} aria-label="Instagram">
-              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a9 9 0 019-9h0a9 9 0 019 9v6a9 9 0 01-9 9h0a9 9 0 01-9-9V9z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.5 6.5h.01" />
-              </svg>
-            </a>
-            <a href="#" className={styles.socialIcon} aria-label="Twitter">
-              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
+            <a
+              href="https://www.instagram.com/vegluxmedia?igsh=MWU0bGN1OGs0bmtzNA=="
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.socialIcon}
+              aria-label="Facebook"
+            >
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
               </svg>
             </a>
           </div>
