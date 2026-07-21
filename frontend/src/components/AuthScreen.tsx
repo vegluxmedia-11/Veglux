@@ -204,7 +204,7 @@ export default function AuthScreen({ onLoginSuccess }: AuthScreenProps) {
                   <input
                     type="email"
                     className={styles.formInput}
-                    placeholder="e.g. luckyjoshi@vegluxmedia.com"
+                    placeholder="e.g. john@company.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
