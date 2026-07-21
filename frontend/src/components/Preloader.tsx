@@ -35,7 +35,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
   return (
     <div className={`${styles.preloaderContainer} ${!loading ? styles.fadeOut : ""}`}>
       <div className={styles.logoWrapper}>
-        <Logo size="large" />
+        <Logo size="large" variant="stacked" />
       </div>
 
       <div className={styles.progressBar}>

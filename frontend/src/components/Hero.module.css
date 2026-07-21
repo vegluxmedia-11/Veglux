@@ -4,9 +4,49 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 120px 0 80px;
+  padding: 85px 0 25px;
   overflow: hidden;
   background-color: var(--background);
+}
+
+.bgSlider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bgSlide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1.08);
+  transition: opacity 1.8s ease-in-out, transform 7s ease-out;
+  filter: brightness(0.9) contrast(1.05);
+}
+
+.bgSlideActive {
+  opacity: 0.65;
+  transform: scale(1);
+}
+
+.bgOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(10, 10, 10, 0.30) 0%, rgba(10, 10, 10, 0.88) 85%);
+  z-index: 1;
 }
 
 .glowBlob {
@@ -41,52 +81,54 @@
 }
 
 .tagline {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.3em;
   color: var(--gold-primary);
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   text-transform: uppercase;
 }
 
 .headline {
-  font-size: 64px;
+  font-size: 52px;
   font-family: var(--font-serif);
   line-height: 1.15;
-  margin-bottom: 24px;
-  max-width: 900px;
+  margin-bottom: 16px;
+  max-width: 880px;
   color: var(--text-primary);
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.85);
 }
 
 @media (max-width: 900px) {
   .headline {
-    font-size: 48px;
+    font-size: 42px;
   }
 }
 
 @media (max-width: 600px) {
   .headline {
-    font-size: 36px;
+    font-size: 32px;
   }
 }
 
 .description {
-  font-size: 18px;
-  line-height: 1.6;
+  font-size: 16px;
+  line-height: 1.55;
   color: var(--text-secondary);
-  max-width: 650px;
-  margin-bottom: 40px;
+  max-width: 660px;
+  margin-bottom: 24px;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
 }
 
 @media (max-width: 600px) {
   .description {
-    font-size: 15px;
+    font-size: 14px;
   }
 }
 
 .ctas {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -96,8 +138,8 @@
   color: #0b0b0b;
   border: none;
   border-radius: 8px;
-  padding: 16px 32px;
-  font-size: 14px;
+  padding: 13px 28px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.08em;
   cursor: pointer;
@@ -111,17 +153,23 @@
   transform: translateY(-2px);
 }
 
+.primaryCta:active {
+  transform: scale(0.96);
+  opacity: 0.92;
+}
+
 .secondaryCta {
   background: transparent;
   color: var(--text-primary);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 16px 32px;
-  font-size: 14px;
+  padding: 13px 28px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.08em;
   cursor: pointer;
   transition: all 0.3s ease;
+  touch-action: manipulation;
 }
 
 .secondaryCta:hover {
@@ -130,40 +178,111 @@
   transform: translateY(-2px);
 }
 
+.secondaryCta:active {
+  transform: scale(0.96);
+  background: rgba(var(--gold-rgb), 0.12);
+  border-color: var(--gold-primary);
+}
+
+@media (max-width: 600px) {
+  .ctas {
+    flex-direction: column;
+    width: 100%;
+    max-width: 320px;
+    gap: 10px;
+  }
+  .primaryCta,
+  .secondaryCta {
+    width: 100%;
+    padding: 12px 20px;
+    text-align: center;
+  }
+}
+
 /* Stats Counter Grid below CTAs */
 .statsGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 30px;
-  margin-top: 80px;
+  gap: 24px;
+  margin-top: 32px;
   width: 100%;
   max-width: 800px;
   border-top: 1px solid var(--border);
-  padding-top: 40px;
+  padding-top: 20px;
 }
 
 @media (max-width: 768px) {
   .statsGrid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 16px;
+    margin-top: 24px;
+    padding-top: 16px;
   }
 }
 
 .statItem {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 }
 
 .statValue {
-  font-size: 36px;
+  font-size: 30px;
   font-family: var(--font-serif);
   color: var(--gold-primary);
 }
 
 .statLabel {
-  font-size: 12px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   Day Mode (Light Theme: [data-theme="light"]) Custom Styling Overrides
+   ========================================================================== */
+:global([data-theme="light"]) .bgOverlay {
+  background: radial-gradient(circle at center, rgba(252, 251, 247, 0.40) 0%, rgba(252, 251, 247, 0.90) 85%);
+}
+
+:global([data-theme="light"]) .bgSlideActive {
+  opacity: 0.55;
+  filter: brightness(1.05) contrast(1.02);
+}
+
+:global([data-theme="light"]) .tagline {
+  color: #a67c1e;
+}
+
+:global([data-theme="light"]) .headline {
+  color: #121110;
+  text-shadow: 0 1px 15px rgba(255, 255, 255, 0.95);
+}
+
+:global([data-theme="light"]) .description {
+  color: #45423a;
+  text-shadow: 0 1px 8px rgba(255, 255, 255, 0.9);
+}
+
+:global([data-theme="light"]) .secondaryCta {
+  color: #121110;
+  border-color: rgba(166, 124, 30, 0.4);
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+:global([data-theme="light"]) .secondaryCta:hover {
+  background: rgba(236, 217, 179, 0.3);
+  border-color: #a67c1e;
+}
+
+:global([data-theme="light"]) .statValue {
+  color: #a67c1e;
+  text-shadow: none;
+}
+
+:global([data-theme="light"]) .statLabel {
+  color: #58554d;
+  font-weight: 600;
 }

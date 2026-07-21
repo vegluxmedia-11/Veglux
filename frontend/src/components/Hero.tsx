@@ -1,15 +1,45 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Hero.module.css";
 
 interface HeroProps {
   onOpenAudit: () => void;
 }
 
+const BACKGROUND_IMAGES = [
+  "/hero-bg-1.png", // Executive Night Penthouse Office
+  "/hero-bg-2.png", // Night Strategy Boardroom
+  "/hero-bg-3.png", // Executive Analytics Workstation
+  "/hero-bg-4.png", // Night Metropolis Penthouse Lounge
+];
+
 export default function Hero({ onOpenAudit }: HeroProps) {
+  const [currentBgIndex, setCurrentBgIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBgIndex((prevIndex) => (prevIndex + 1) % BACKGROUND_IMAGES.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section id="hero" className={styles.hero}>
+      {/* Auto Switching Background Images */}
+      <div className={styles.bgSlider}>
+        {BACKGROUND_IMAGES.map((img, index) => (
+          <div
+            key={img}
+            className={`${styles.bgSlide} ${
+              index === currentBgIndex ? styles.bgSlideActive : ""
+            }`}
+            style={{ backgroundImage: `url('${img}')` }}
+          />
+        ))}
+        <div className={styles.bgOverlay}></div>
+      </div>
+
       {/* Background elements */}
       <div className="bg-grid"></div>
       <div className={styles.glowBlob}></div>

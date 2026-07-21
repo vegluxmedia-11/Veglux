@@ -1,7 +1,16 @@
 .logoWrapper {
   display: inline-flex;
   align-items: center;
+}
+
+.inline {
+  gap: 12px;
+}
+
+.stacked {
+  flex-direction: column;
   justify-content: center;
+  gap: 0;
 }
 
 .logoImg {
@@ -14,7 +23,59 @@
   filter: contrast(1.05);
 }
 
-/* Sizing definitions for different placements */
+.logoIcon {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  transition: all 0.3s ease;
+  mix-blend-mode: screen;
+  filter: contrast(1.1);
+}
+
+.logoTextImg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  transition: all 0.3s ease;
+  mix-blend-mode: screen;
+  filter: contrast(1.1);
+}
+
+:global([data-theme="light"]) .logoImg,
+:global([data-theme="light"]) .logoIcon,
+:global([data-theme="light"]) .logoTextImg {
+  mix-blend-mode: multiply;
+  filter: contrast(1.25) brightness(0.85);
+}
+
+/* Proportional Sizing definitions (Inline - Navbar) */
+.small .logoIcon {
+  max-height: 46px;
+}
+
+.small .logoTextImg {
+  max-height: 32px;
+}
+
+.medium .logoIcon {
+  max-height: 60px;
+}
+
+.medium .logoTextImg {
+  max-height: 35px;
+}
+
+.large .logoIcon {
+  max-height: 90px;
+}
+
+.large .logoTextImg {
+  max-height: 50px;
+}
+
+/* Sizing definitions (Stacked - Preloader) */
 .small .logoImg {
   max-height: 50px;
 }
@@ -24,5 +85,18 @@
 }
 
 .large .logoImg {
-  max-height: 240px;
+  max-height: 200px;
+}
+
+/* Mobile responsive sizing override */
+@media (max-width: 600px) {
+  .logoWrapper {
+    gap: 8px;
+  }
+  .small .logoIcon {
+    max-height: 34px;
+  }
+  .small .logoTextImg {
+    max-height: 22px;
+  }
 }

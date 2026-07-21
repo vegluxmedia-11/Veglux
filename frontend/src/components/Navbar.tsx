@@ -7,13 +7,11 @@ import styles from "./Navbar.module.css";
 import Logo from "./Logo";
 
 interface NavbarProps {
-  theme: "dark" | "light";
-  toggleTheme: () => void;
   onLogout?: () => void;
   onOpenAudit: () => void;
 }
 
-export default function Navbar({ theme, toggleTheme, onLogout, onOpenAudit }: NavbarProps) {
+export default function Navbar({ onLogout, onOpenAudit }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -80,18 +78,6 @@ export default function Navbar({ theme, toggleTheme, onLogout, onOpenAudit }: Na
 
           {/* Action Area */}
           <div className={styles.actionArea}>
-            {/* Theme Toggle */}
-            <button className={styles.iconBtn} onClick={toggleTheme} title="Switch Theme">
-              {theme === "dark" ? (
-                <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.148.148z" />
-                </svg>
-              ) : (
-                <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                </svg>
-              )}
-            </button>
 
             {/* Logout Button */}
             {onLogout && (
@@ -134,50 +120,65 @@ export default function Navbar({ theme, toggleTheme, onLogout, onOpenAudit }: Na
         onClick={() => setIsMobileMenuOpen(false)}
       ></div>
       <div className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles.mobileMenuOpen : ""}`}>
-        <Link
-          href="/"
-          className={`${styles.navLink} ${isActive("/") ? styles.navLinkActive : ""}`}
-          onClick={() => setIsMobileMenuOpen(false)}
-        >
-          Home
-        </Link>
-        <Link
-          href="/about"
-          className={`${styles.navLink} ${isActive("/about") ? styles.navLinkActive : ""}`}
-          onClick={() => setIsMobileMenuOpen(false)}
-        >
-          About
-        </Link>
-        <Link
-          href="/services"
-          className={`${styles.navLink} ${isActive("/services") ? styles.navLinkActive : ""}`}
-          onClick={() => setIsMobileMenuOpen(false)}
-        >
-          Services
-        </Link>
-        <Link
-          href="/portfolio"
-          className={`${styles.navLink} ${isActive("/portfolio") ? styles.navLinkActive : ""}`}
-          onClick={() => setIsMobileMenuOpen(false)}
-        >
-          Portfolio
-        </Link>
-        <Link
-          href="/contact"
-          className={`${styles.navLink} ${isActive("/contact") ? styles.navLinkActive : ""}`}
-          onClick={() => setIsMobileMenuOpen(false)}
-        >
-          Contact
-        </Link>
+        <div className={styles.mobileMenuHeader}>
+          <Logo size="small" />
+          <button
+            className={styles.mobileCloseBtn}
+            onClick={() => setIsMobileMenuOpen(false)}
+            aria-label="Close menu"
+          >
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div className={styles.mobileNavLinks}>
+          <Link
+            href="/"
+            className={`${styles.mobileNavLink} ${isActive("/") ? styles.mobileNavLinkActive : ""}`}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Home
+          </Link>
+          <Link
+            href="/about"
+            className={`${styles.mobileNavLink} ${isActive("/about") ? styles.mobileNavLinkActive : ""}`}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            About
+          </Link>
+          <Link
+            href="/services"
+            className={`${styles.mobileNavLink} ${isActive("/services") ? styles.mobileNavLinkActive : ""}`}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Services
+          </Link>
+          <Link
+            href="/portfolio"
+            className={`${styles.mobileNavLink} ${isActive("/portfolio") ? styles.mobileNavLinkActive : ""}`}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Portfolio
+          </Link>
+          <Link
+            href="/contact"
+            className={`${styles.mobileNavLink} ${isActive("/contact") ? styles.mobileNavLinkActive : ""}`}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Contact
+          </Link>
+        </div>
+
         <button
-          className={styles.ctaBtn}
-          style={{ marginTop: "20px" }}
+          className={`${styles.ctaBtn} ${styles.mobileCtaBtn}`}
           onClick={() => {
             setIsMobileMenuOpen(false);
             onOpenAudit();
           }}
         >
-          FREE AUDIT
+          Book Free Audit
         </button>
       </div>
     </>

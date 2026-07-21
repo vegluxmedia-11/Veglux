@@ -14,18 +14,12 @@ interface PageWrapperProps {
 export default function PageWrapper({ children }: PageWrapperProps) {
   const [loading, setLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [isAuditOpen, setIsAuditOpen] = useState(false);
 
   useEffect(() => {
-    // 1. Theme initialization
-    const storedTheme = localStorage.getItem("veglux_theme") as "dark" | "light" | null;
-    if (storedTheme) {
-      setTheme(storedTheme);
-      document.documentElement.setAttribute("data-theme", storedTheme);
-    } else {
-      document.documentElement.setAttribute("data-theme", "dark");
-    }
+    // 1. Theme initialization - Force Dark Luxury Theme
+    document.documentElement.setAttribute("data-theme", "dark");
+    localStorage.setItem("veglux_theme", "dark");
 
     // 2. Auth state initialization
     const authState = localStorage.getItem("veglux_logged_in") === "true";
@@ -41,13 +35,6 @@ export default function PageWrapper({ children }: PageWrapperProps) {
       window.removeEventListener("open-veglux-audit", handleOpenAudit);
     };
   }, []);
-
-  const handleToggleTheme = () => {
-    const nextTheme = theme === "dark" ? "light" : "dark";
-    setTheme(nextTheme);
-    document.documentElement.setAttribute("data-theme", nextTheme);
-    localStorage.setItem("veglux_theme", nextTheme);
-  };
 
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
@@ -70,16 +57,12 @@ export default function PageWrapper({ children }: PageWrapperProps) {
             /* 2. Login & Signup Gateway Screen (Unauthenticated) */
             <AuthScreen
               onLoginSuccess={handleLoginSuccess}
-              theme={theme}
-              toggleTheme={handleToggleTheme}
             />
           ) : (
             /* 3. Fully Unlocked Site Shell (Authenticated) */
             <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
               {/* Header Navigation */}
               <Navbar
-                theme={theme}
-                toggleTheme={handleToggleTheme}
                 onLogout={handleLogout}
                 onOpenAudit={() => setIsAuditOpen(true)}
               />
