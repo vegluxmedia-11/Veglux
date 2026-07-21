@@ -67,7 +67,7 @@ export default function AuditModal({ isOpen, onClose }: AuditModalProps) {
             </svg>
             <strong>Audit Requested Successfully!</strong>
             <p style={{ fontSize: "13px", marginTop: "6px", color: "var(--text-secondary)" }}>
-              Lucky Joshi will review your competitors and contact you with the results within 24 hours.
+              Dikshant Joshi will review your competitors and contact you with the results within 24 hours.
             </p>
           </div>
         ) : (

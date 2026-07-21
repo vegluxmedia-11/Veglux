@@ -56,7 +56,7 @@ export default function Hero({ onOpenAudit }: HeroProps) {
 
       <div className={`${styles.container} container`}>
         <p className={`${styles.tagline} animate-fade`}>
-          Udaipur's Luxury Growth Agency
+          Udaipur's Luxury Growth Agency • Founded by Dikshant Joshi
         </p>
 
         <h1 className={`${styles.headline} animate-fade`}>

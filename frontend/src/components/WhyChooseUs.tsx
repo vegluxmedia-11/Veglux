@@ -56,6 +56,15 @@ export default function WhyChooseUs() {
         </svg>
       ),
     },
+    {
+      title: "Direct Founder Oversight",
+      desc: "Every account is personally reviewed and strategized by Founder & CEO Dikshant Joshi to guarantee maximum performance and scale.",
+      icon: (
+        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+        </svg>
+      ),
+    },
   ];
 
   return (
@@ -76,6 +85,20 @@ export default function WhyChooseUs() {
               <p className={styles.cardDesc}>{pillar.desc}</p>
             </div>
           ))}
+        </div>
+
+        {/* Founder's Direct Commitment Banner */}
+        <div className={styles.founderBanner}>
+          <div className={styles.founderInfo}>
+            <span className={styles.founderBadge}>FOUNDER'S DIRECT COMMITMENT</span>
+            <p className={styles.founderQuote}>
+              "We treat every client's ad spend as if it were our own capital. High ROAS, absolute transparency, and revenue scaling are non-negotiable."
+            </p>
+            <div className={styles.founderMeta}>
+              <span className={styles.founderName}>Dikshant Joshi</span>
+              <span className={styles.founderTitle}>Founder & CEO, Veglux Media</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>

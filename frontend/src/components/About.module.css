@@ -99,13 +99,23 @@
   margin-top: 80px;
   border-top: 1px solid var(--border);
   padding-top: 60px;
+  text-align: center;
+}
+
+.teamSubhead {
+  color: var(--gold-primary);
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  font-weight: 500;
+  margin-bottom: 8px;
 }
 
 .teamTitle {
-  font-size: 26px;
+  font-size: 32px;
   font-family: var(--font-serif);
   color: var(--text-primary);
-  margin-bottom: 30px;
+  margin-bottom: 40px;
   text-align: center;
 }
 
@@ -119,26 +129,28 @@
 .founderCard {
   background: var(--card-bg);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 30px;
-  max-width: 480px;
+  border-radius: 16px;
+  padding: 36px;
+  max-width: 620px;
   display: flex;
-  gap: 24px;
-  align-items: center;
+  gap: 28px;
+  align-items: flex-start;
   transition: all 0.3s ease;
+  box-shadow: var(--shadow-gold);
 }
 
 @media (max-width: 600px) {
   .founderCard {
     flex-direction: column;
     text-align: center;
-    padding: 20px;
+    padding: 24px 18px;
+    align-items: center;
   }
 }
 
 .founderCard:hover {
   border-color: var(--gold-primary);
-  box-shadow: var(--shadow-gold);
+  box-shadow: var(--shadow-glow);
   transform: translateY(-3px);
 }
 
@@ -162,31 +174,57 @@
   color: var(--gold-primary);
 }
 
-.founderInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+.founderBadge {
+  align-self: flex-start;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--gold-primary);
+  text-transform: uppercase;
+  background: rgba(var(--gold-rgb), 0.1);
+  padding: 4px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  margin-bottom: 2px;
+}
+
+@media (max-width: 600px) {
+  .founderBadge {
+    align-self: center;
+  }
 }
 
 .founderName {
-  font-size: 20px;
-  font-family: var(--font-sans);
+  font-size: 24px;
+  font-family: var(--font-serif);
   font-weight: 600;
   color: var(--text-primary);
 }
 
 .founderTitle {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--gold-primary);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .founderBio {
   font-size: 13px;
   color: var(--text-secondary);
-  line-height: 1.5;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.founderQuoteBlock {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  font-style: italic;
+  color: var(--gold-secondary);
+  border-left: 2px solid var(--gold-primary);
+  padding-left: 12px;
+  margin: 6px 0 12px;
+  line-height: 1.4;
 }
 
 .founderContact {

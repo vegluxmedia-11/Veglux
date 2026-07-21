@@ -17,8 +17,8 @@ const sansFont = Inter({
 export const metadata: Metadata = {
   title: "Veglux Media | Elevate • Connect • Grow",
   description: "Veglux Media is a premium digital marketing agency based in Udaipur, Rajasthan. We provide Meta Ads, Google Ads, SEO, Social Media, and Web Development services designed to scale your business.",
-  keywords: ["Digital Marketing", "Veglux Media", "Performance Marketing", "Meta Ads", "Google Ads", "SEO", "Web Development", "Lucky Joshi", "Udaipur Marketing Agency"],
-  authors: [{ name: "Lucky Joshi", url: "https://vegluxmedia.com" }],
+  keywords: ["Digital Marketing", "Veglux Media", "Performance Marketing", "Meta Ads", "Google Ads", "SEO", "Web Development", "Dikshant Joshi", "Udaipur Marketing Agency"],
+  authors: [{ name: "Dikshant Joshi", url: "https://vegluxmedia.com" }],
 };
 
 import PageWrapper from "@/components/PageWrapper";

@@ -57,7 +57,7 @@ export default function Contact({ prefilledMessage, onClearPrefill }: ContactPro
       if (data.success) {
         setStatus({
           type: "success",
-          text: "Thank you! Lucky Joshi or a dedicated manager will contact you within 2 hours.",
+          text: "Thank you! Dikshant Joshi or a dedicated manager will contact you within 2 hours.",
         });
         // Clear form
         setName("");
@@ -167,7 +167,7 @@ export default function Contact({ prefilledMessage, onClearPrefill }: ContactPro
                     <input
                       type="text"
                       className={styles.formInput}
-                      placeholder="e.g. Lucky Joshi"
+                      placeholder="e.g. Dikshant Joshi"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       required

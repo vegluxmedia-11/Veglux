@@ -130,7 +130,7 @@ export default function Footer() {
 
       <div className={`${styles.bottomBar} container`}>
         <span className={styles.copyright}>
-          © {new Date().getFullYear()} Veglux Media. All Rights Reserved. Designed by Antigravity.
+          © {new Date().getFullYear()} Veglux Media. All Rights Reserved.
         </span>
         <div className={styles.bottomLinks}>
           <a href="#">Privacy Policy</a>

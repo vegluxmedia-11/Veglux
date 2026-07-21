@@ -231,7 +231,7 @@ export default function ServiceDetail({ service }: ServiceDetailProps) {
           <div className={styles.ctaBanner}>
             <h2 className={styles.ctaTitle}>Ready to Scale with {service.title}?</h2>
             <p className={styles.ctaText}>
-              Claim a complimentary strategy audit with Lucky Joshi and the Veglux Media team today.
+              Claim a complimentary strategy audit with Dikshant Joshi and the Veglux Media team today.
             </p>
             <button className={styles.primaryCta} onClick={handleOpenAudit}>
               CLAIM YOUR FREE AUDIT NOW

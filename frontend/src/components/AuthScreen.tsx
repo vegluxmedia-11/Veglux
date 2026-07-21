@@ -22,7 +22,7 @@ export default function AuthScreen({ onLoginSuccess }: AuthScreenProps) {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const defaultUser = {
-        name: "Lucky Joshi",
+        name: "Dikshant Joshi",
         email: "luckyjoshi@vegluxmedia.com",
         password: "password123",
         company: "Veglux Media",
