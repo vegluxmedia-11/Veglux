@@ -1,16 +1,39 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import styles from "./ServiceDetail.module.css";
 import { ServiceData, servicesList } from "@/data/servicesData";
+import { getServiceBySlug, getServices } from "@/lib/services";
 
 interface ServiceDetailProps {
   service: ServiceData;
 }
 
-export default function ServiceDetail({ service }: ServiceDetailProps) {
+export default function ServiceDetail({ service: initialService }: ServiceDetailProps) {
+  const [service, setService] = useState<ServiceData>(initialService);
+  const [allServices, setAllServices] = useState<any[]>(servicesList);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+
+  useEffect(() => {
+    async function loadDynamicData() {
+      try {
+        if (initialService?.slug) {
+          const apiService = await getServiceBySlug(initialService.slug);
+          if (apiService) {
+            setService((prev) => ({ ...prev, ...apiService }));
+          }
+        }
+        const apiServicesList = await getServices();
+        if (apiServicesList && apiServicesList.length > 0) {
+          setAllServices(apiServicesList);
+        }
+      } catch (err) {
+        console.warn("Using default fallback service data", err);
+      }
+    }
+    loadDynamicData();
+  }, [initialService]);
 
   const toggleFaq = (index: number) => {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
@@ -34,22 +57,24 @@ export default function ServiceDetail({ service }: ServiceDetailProps) {
             </Link>
 
             <div>
-              <span className={styles.badge}>{service.categoryLabel}</span>
+              <span className={styles.badge}>{service.categoryLabel || service.category}</span>
             </div>
 
             <h1 className={`${styles.heroTitle} gold-text`}>{service.title}</h1>
             <p className={styles.heroTagline}>{service.tagline}</p>
-            <p className={styles.heroSummary}>{service.summary}</p>
+            <p className={styles.heroSummary}>{service.summary || service.desc}</p>
 
             {/* Metrics */}
-            <div className={styles.heroMetricsGrid}>
-              {service.heroMetrics.map((metric, idx) => (
-                <div key={idx} className={styles.metricCard}>
-                  <div className={styles.metricValue}>{metric.value}</div>
-                  <div className={styles.metricLabel}>{metric.label}</div>
-                </div>
-              ))}
-            </div>
+            {service.heroMetrics && service.heroMetrics.length > 0 && (
+              <div className={styles.heroMetricsGrid}>
+                {service.heroMetrics.map((metric, idx) => (
+                  <div key={idx} className={styles.metricCard}>
+                    <div className={styles.metricValue}>{metric.value}</div>
+                    <div className={styles.metricLabel}>{metric.label}</div>
+                  </div>
+                ))}
+              </div>
+            )}
 
             {/* Hero CTAs */}
             <div className={styles.heroCtaGroup}>
@@ -68,9 +93,9 @@ export default function ServiceDetail({ service }: ServiceDetailProps) {
       <nav className={styles.switcherBar}>
         <div className="container">
           <div className={styles.switcherList}>
-            {servicesList.map((item) => (
+            {allServices.map((item, idx) => (
               <Link
-                key={item.id}
+                key={item.id || item.slug || idx}
                 href={`/services/${item.slug}`}
                 className={`${styles.switcherItem} ${
                   item.slug === service.slug ? styles.switcherItemActive : ""
@@ -92,153 +117,167 @@ export default function ServiceDetail({ service }: ServiceDetailProps) {
               <h2 className={styles.sectionTitle} style={{ marginBottom: "20px" }}>
                 Transforming Your Digital Presence
               </h2>
-              <p className={styles.overviewText}>{service.overview}</p>
+              <p className={styles.overviewText}>{service.overview || service.summary || service.desc}</p>
             </div>
 
-            <div className={styles.whyBox}>
-              <h3 className={styles.whyBoxTitle}>Key Advantages</h3>
-              <ul className={styles.whyList}>
-                {service.whyItMatters.map((point, idx) => (
-                  <li key={idx} className={styles.whyItem}>
-                    <svg
-                      className={styles.checkIcon}
-                      width="18"
-                      height="18"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={3}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {service.whyItMatters && service.whyItMatters.length > 0 && (
+              <div className={styles.whyBox}>
+                <h3 className={styles.whyBoxTitle}>Key Advantages</h3>
+                <ul className={styles.whyList}>
+                  {service.whyItMatters.map((point, idx) => (
+                    <li key={idx} className={styles.whyItem}>
+                      <svg
+                        className={styles.checkIcon}
+                        width="18"
+                        height="18"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={3}
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </section>
 
       {/* 4. Core Pillars & Deliverables */}
-      <section className={styles.section}>
-        <div className="container">
-          <div className={styles.sectionHeader}>
-            <p className={styles.sectionTag}>Core Framework</p>
-            <h2 className={styles.sectionTitle}>What We Deliver</h2>
-          </div>
+      {service.pillars && service.pillars.length > 0 && (
+        <section className={styles.section}>
+          <div className="container">
+            <div className={styles.sectionHeader}>
+              <p className={styles.sectionTag}>Core Framework</p>
+              <h2 className={styles.sectionTitle}>What We Deliver</h2>
+            </div>
 
-          <div className={styles.pillarsGrid}>
-            {service.pillars.map((pillar, idx) => (
-              <div key={idx} className={styles.pillarCard}>
-                <h3 className={styles.pillarTitle}>{pillar.title}</h3>
-                <p className={styles.pillarDesc}>{pillar.desc}</p>
-                <div className={styles.deliverablesTitle}>Deliverables Included</div>
-                <ul className={styles.deliverableList}>
-                  {pillar.deliverables.map((item, dIdx) => (
-                    <li key={dIdx} className={styles.deliverableItem}>
-                      <span className={styles.bulletDot}></span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            <div className={styles.pillarsGrid}>
+              {service.pillars.map((pillar, idx) => (
+                <div key={idx} className={styles.pillarCard}>
+                  <h3 className={styles.pillarTitle}>{pillar.title}</h3>
+                  <p className={styles.pillarDesc}>{pillar.desc}</p>
+                  {pillar.deliverables && pillar.deliverables.length > 0 && (
+                    <>
+                      <div className={styles.deliverablesTitle}>Deliverables Included</div>
+                      <ul className={styles.deliverableList}>
+                        {pillar.deliverables.map((item, dIdx) => (
+                          <li key={dIdx} className={styles.deliverableItem}>
+                            <span className={styles.bulletDot}></span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* 5. Step-by-Step Execution Process */}
-      <section className={styles.section}>
-        <div className="container">
-          <div className={styles.sectionHeader}>
-            <p className={styles.sectionTag}>Execution Roadmap</p>
-            <h2 className={styles.sectionTitle}>How We Execute</h2>
-          </div>
+      {service.process && service.process.length > 0 && (
+        <section className={styles.section}>
+          <div className="container">
+            <div className={styles.sectionHeader}>
+              <p className={styles.sectionTag}>Execution Roadmap</p>
+              <h2 className={styles.sectionTitle}>How We Execute</h2>
+            </div>
 
-          <div className={styles.processGrid}>
-            {service.process.map((step, idx) => (
-              <div key={idx} className={styles.processCard}>
-                <div className={styles.stepNumber}>{step.step}</div>
-                <h3 className={styles.stepTitle}>{step.title}</h3>
-                <p className={styles.stepDesc}>{step.desc}</p>
-              </div>
-            ))}
+            <div className={styles.processGrid}>
+              {service.process.map((step, idx) => (
+                <div key={idx} className={styles.processCard}>
+                  <div className={styles.stepNumber}>{step.step || `0${idx + 1}`}</div>
+                  <h3 className={styles.stepTitle}>{step.title}</h3>
+                  <p className={styles.stepDesc}>{step.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* 6. Tech Stack & Tools */}
-      <section className={styles.section}>
-        <div className="container">
-          <div className={styles.sectionHeader}>
-            <p className={styles.sectionTag}>Tech & Stack</p>
-            <h2 className={styles.sectionTitle}>Tools We Master</h2>
-          </div>
+      {service.technologies && service.technologies.length > 0 && (
+        <section className={styles.section}>
+          <div className="container">
+            <div className={styles.sectionHeader}>
+              <p className={styles.sectionTag}>Tech & Stack</p>
+              <h2 className={styles.sectionTitle}>Tools We Master</h2>
+            </div>
 
-          <div className={styles.techWrap}>
-            {service.technologies.map((tech, idx) => (
-              <div key={idx} className={styles.techPill}>
-                {tech}
-              </div>
-            ))}
+            <div className={styles.techWrap}>
+              {service.technologies.map((tech, idx) => (
+                <div key={idx} className={styles.techPill}>
+                  {tech}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* 7. FAQs Accordion */}
-      <section className={styles.section}>
-        <div className="container">
-          <div className={styles.sectionHeader}>
-            <p className={styles.sectionTag}>Questions & Answers</p>
-            <h2 className={styles.sectionTitle}>Frequently Asked Questions</h2>
-          </div>
+      {service.faqs && service.faqs.length > 0 && (
+        <section className={styles.section}>
+          <div className="container">
+            <div className={styles.sectionHeader}>
+              <p className={styles.sectionTag}>Questions & Answers</p>
+              <h2 className={styles.sectionTitle}>Frequently Asked Questions</h2>
+            </div>
 
-          <div className={styles.faqList}>
-            {service.faqs.map((faq, idx) => {
-              const isOpen = openFaqIndex === idx;
-              return (
-                <div key={idx} className={styles.faqItem}>
-                  <button className={styles.faqHeader} onClick={() => toggleFaq(idx)}>
-                    <span>{faq.q}</span>
-                    <svg
-                      className={`${styles.faqIcon} ${isOpen ? styles.faqIconOpen : ""}`}
-                      width="20"
-                      height="20"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                  </button>
-                  {isOpen && <div className={styles.faqAnswer}>{faq.a}</div>}
-                </div>
-              );
-            })}
-          </div>
+            <div className={styles.faqList}>
+              {service.faqs.map((faq, idx) => {
+                const isOpen = openFaqIndex === idx;
+                return (
+                  <div key={idx} className={styles.faqItem}>
+                    <button className={styles.faqHeader} onClick={() => toggleFaq(idx)}>
+                      <span>{faq.q}</span>
+                      <svg
+                        className={`${styles.faqIcon} ${isOpen ? styles.faqIconOpen : ""}`}
+                        width="20"
+                        height="20"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </button>
+                    {isOpen && <div className={styles.faqAnswer}>{faq.a}</div>}
+                  </div>
+                );
+              })}
+            </div>
 
-          {/* Bottom Call to Action */}
-          <div className={styles.ctaBanner}>
-            <h2 className={styles.ctaTitle}>Ready to Scale with {service.title}?</h2>
-            <p className={styles.ctaText}>
-              Claim a complimentary strategy audit with Dikshant Joshi and the Veglux Media team today.
-            </p>
-            <button className={styles.primaryCta} onClick={handleOpenAudit}>
-              CLAIM YOUR FREE AUDIT NOW
-            </button>
+            {/* Bottom Call to Action */}
+            <div className={styles.ctaBanner}>
+              <h2 className={styles.ctaTitle}>Ready to Scale with {service.title}?</h2>
+              <p className={styles.ctaText}>
+                Claim a complimentary strategy audit with Dikshant Joshi and the Veglux Media team today.
+              </p>
+              <button className={styles.primaryCta} onClick={handleOpenAudit}>
+                CLAIM YOUR FREE AUDIT NOW
+              </button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
     </div>
   );
 }

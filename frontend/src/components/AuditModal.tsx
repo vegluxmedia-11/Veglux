@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import styles from "./AuditModal.module.css";
+import { submitLead } from "@/lib/services";
 
 interface AuditModalProps {
   isOpen: boolean;
@@ -16,19 +17,31 @@ export default function AuditModal({ isOpen, onClose }: AuditModalProps) {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!website || !email || !phone) return;
 
     setIsSubmitting(true);
+    setErrorMsg("");
 
-    // Simulate submission
-    setTimeout(() => {
+    try {
+      const messageBody = `AUDIT REQUEST: Website: ${website} | Est Spend: ${spend || 'N/A'} | Competitor: ${competitor || 'N/A'}`;
+
+      await submitLead({
+        name: `Audit Lead (${website})`,
+        email,
+        phone,
+        service: "Free Digital Audit",
+        message: messageBody,
+      });
+
       setIsSubmitting(false);
       setSuccess(true);
+
       setTimeout(() => {
         setSuccess(false);
         setWebsite("");
@@ -37,8 +50,11 @@ export default function AuditModal({ isOpen, onClose }: AuditModalProps) {
         setPhone("");
         setEmail("");
         onClose();
-      }, 2000);
-    }, 1500);
+      }, 2500);
+    } catch (err: any) {
+      setIsSubmitting(false);
+      setErrorMsg(err.response?.data?.error || "Error connecting to server. Please try again.");
+    }
   };
 
   return (
@@ -72,6 +88,11 @@ export default function AuditModal({ isOpen, onClose }: AuditModalProps) {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className={styles.form}>
+            {errorMsg && (
+              <div style={{ color: "var(--error)", fontSize: "13px", marginBottom: "10px" }}>
+                {errorMsg}
+              </div>
+            )}
             <div className={styles.formGroup}>
               <label className={styles.formLabel}>Website URL *</label>
               <input

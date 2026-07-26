@@ -17,6 +17,7 @@ export interface ServiceData {
   title: string;
   tagline: string;
   summary: string;
+  desc?: string;
   heroMetrics: { label: string; value: string }[];
   overview: string;
   whyItMatters: string[];

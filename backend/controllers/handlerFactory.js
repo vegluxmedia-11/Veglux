@@ -38,12 +38,20 @@ exports.createOne = Model => async (req, res, next) => {
   }
 };
 
+const mongoose = require('mongoose');
+
 exports.getOne = Model => async (req, res, next) => {
   try {
-    const doc = await Model.findById(req.params.id);
+    let doc;
+    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+      doc = await Model.findById(req.params.id);
+    }
+    if (!doc) {
+      doc = await Model.findOne({ slug: req.params.id });
+    }
 
     if (!doc) {
-      return res.status(404).json({ success: false, error: 'No document found with that ID' });
+      return res.status(404).json({ success: false, error: 'No document found with that ID or slug' });
     }
 
     res.status(200).json({ success: true, data: doc });

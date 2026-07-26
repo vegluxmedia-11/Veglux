@@ -1,96 +1,99 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Pricing.module.css";
-
-interface PackageFeature {
-  name: string;
-  included: boolean;
-}
-
-interface PricingPackage {
-  title: string;
-  desc: string;
-  price: string;
-  features: PackageFeature[];
-  featured: boolean;
-  ctaText: string;
-}
-
-interface CustomService {
-  id: string;
-  name: string;
-  price: number;
-  desc: string;
-}
+import { getPricingPlans, getCustomServices, PricingPackage, CustomServiceItem } from "@/lib/services";
 
 interface PricingProps {
   onOpenAudit: (customNotes?: string) => void;
 }
 
+const defaultPackages: PricingPackage[] = [
+  {
+    title: "Starter",
+    desc: "Perfect for local businesses looking to establish their online presence.",
+    price: "₹25,000",
+    featured: false,
+    ctaText: "Get Started",
+    features: [
+      { name: "Social Media (12 Posts/mo)", included: true },
+      { name: "Google Business Optimization", included: true },
+      { name: "Basic SEO Keyword Audit", included: true },
+      { name: "Monthly Performance Report", included: true },
+      { name: "Meta & Google Ads Campaign", included: false },
+      { name: "Premium Website Development", included: false },
+      { name: "Dedicated Account Manager", included: false },
+    ],
+  },
+  {
+    title: "Professional",
+    desc: "Accelerate leads and revenue. Our most popular scaling program.",
+    price: "₹55,000",
+    featured: true,
+    ctaText: "Scale My Business",
+    features: [
+      { name: "Social Media (24 Posts + 8 Reels)", included: true },
+      { name: "Meta Ads (Facebook & Insta)", included: true },
+      { name: "Google Search Ads setup", included: true },
+      { name: "Full SEO Optimization & Backlinks", included: true },
+      { name: "Bi-Weekly Strategy Sync Calls", included: true },
+      { name: "Premium Website Development", included: false },
+      { name: "Dedicated Account Manager", included: true },
+    ],
+  },
+  {
+    title: "Premium",
+    desc: "Complete digital dominance for brands looking to expand exponentially.",
+    price: "₹95,000",
+    featured: false,
+    ctaText: "Secure Dominance",
+    features: [
+      { name: "Unlimited Content Creation & Reels", included: true },
+      { name: "Meta, Google & YouTube Ads", included: true },
+      { name: "Full-Scale SEO & PR Backlinks", included: true },
+      { name: "Next.js Custom Web Development", included: true },
+      { name: "Advanced CRO Funnel Design", included: true },
+      { name: "Weekly Executive Strategy Briefs", included: true },
+      { name: "Dedicated Director-Level Manager", included: true },
+    ],
+  },
+];
+
+const defaultCustomServices: CustomServiceItem[] = [
+  { id: "meta", name: "Meta Ads Management", price: 15000, desc: "Lead generation & Catalog sales" },
+  { id: "google", name: "Google & YT Ads", price: 15000, desc: "Search intent & Video hooks" },
+  { id: "seo", name: "SEO Optimization", price: 20000, desc: "On-page rank & Backlink acquisition" },
+  { id: "smm", name: "Social Media & Reels", price: 25000, desc: "Content calendar & video editing" },
+  { id: "webdev", name: "Next.js Web Dev", price: 30000, desc: "Bespoke custom-coded web portal" },
+  { id: "email", name: "Email Marketing Automation", price: 12000, desc: "Abandoned flows & Newsletters" },
+];
+
 export default function Pricing({ onOpenAudit }: PricingProps) {
-  const packages: PricingPackage[] = [
-    {
-      title: "Starter",
-      desc: "Perfect for local businesses looking to establish their online presence.",
-      price: "₹25,000",
-      featured: false,
-      ctaText: "Get Started",
-      features: [
-        { name: "Social Media (12 Posts/mo)", included: true },
-        { name: "Google Business Optimization", included: true },
-        { name: "Basic SEO Keyword Audit", included: true },
-        { name: "Monthly Performance Report", included: true },
-        { name: "Meta & Google Ads Campaign", included: false },
-        { name: "Premium Website Development", included: false },
-        { name: "Dedicated Account Manager", included: false },
-      ],
-    },
-    {
-      title: "Professional",
-      desc: "Accelerate leads and revenue. Our most popular scaling program.",
-      price: "₹55,000",
-      featured: true,
-      ctaText: "Scale My Business",
-      features: [
-        { name: "Social Media (24 Posts + 8 Reels)", included: true },
-        { name: "Meta Ads (Facebook & Insta)", included: true },
-        { name: "Google Search Ads setup", included: true },
-        { name: "Full SEO Optimization & Backlinks", included: true },
-        { name: "Bi-Weekly Strategy Sync Calls", included: true },
-        { name: "Premium Website Development", included: false },
-        { name: "Dedicated Account Manager", included: true },
-      ],
-    },
-    {
-      title: "Premium",
-      desc: "Complete digital dominance for brands looking to expand exponentially.",
-      price: "₹95,000",
-      featured: false,
-      ctaText: "Secure Dominance",
-      features: [
-        { name: "Unlimited Content Creation & Reels", included: true },
-        { name: "Meta, Google & YouTube Ads", included: true },
-        { name: "Full-Scale SEO & PR Backlinks", included: true },
-        { name: "Next.js Custom Web Development", included: true },
-        { name: "Advanced CRO Funnel Design", included: true },
-        { name: "Weekly Executive Strategy Briefs", included: true },
-        { name: "Dedicated Director-Level Manager", included: true },
-      ],
-    },
-  ];
-
-  const customServices: CustomService[] = [
-    { id: "meta", name: "Meta Ads Management", price: 15000, desc: "Lead generation & Catalog sales" },
-    { id: "google", name: "Google & YT Ads", price: 15000, desc: "Search intent & Video hooks" },
-    { id: "seo", name: "SEO Optimization", price: 20000, desc: "On-page rank & Backlink acquisition" },
-    { id: "smm", name: "Social Media & Reels", price: 25000, desc: "Content calendar & video editing" },
-    { id: "webdev", name: "Next.js Web Dev", price: 30000, desc: "Bespoke custom-coded web portal" },
-    { id: "email", name: "Email Marketing Automation", price: 12000, desc: "Abandoned flows & Newsletters" },
-  ];
-
+  const [packages, setPackages] = useState<PricingPackage[]>(defaultPackages);
+  const [customServices, setCustomServices] = useState<CustomServiceItem[]>(defaultCustomServices);
   const [selectedServices, setSelectedServices] = useState<string[]>(["meta", "smm"]);
   const baseFee = 15000;
+
+  useEffect(() => {
+    async function loadPricingData() {
+      try {
+        const plans = await getPricingPlans();
+        if (plans && plans.length > 0) {
+          setPackages(plans);
+        }
+        const cServices = await getCustomServices();
+        if (cServices && cServices.length > 0) {
+          setCustomServices(cServices);
+          if (cServices[0]?.id) {
+            setSelectedServices([cServices[0].id]);
+          }
+        }
+      } catch (err) {
+        console.warn("Using default pricing fallbacks", err);
+      }
+    }
+    loadPricingData();
+  }, []);
 
   const handleServiceToggle = (id: string) => {
     setSelectedServices((prev) =>
@@ -127,7 +130,7 @@ export default function Pricing({ onOpenAudit }: PricingProps) {
         <div className={styles.pricingGrid}>
           {packages.map((pkg, idx) => (
             <div
-              key={idx}
+              key={pkg._id || idx}
               className={`${styles.pkgCard} ${pkg.featured ? styles.featuredCard : ""}`}
             >
               {pkg.featured && <span className={styles.featuredBadge}>Recommended</span>}
@@ -137,30 +140,32 @@ export default function Pricing({ onOpenAudit }: PricingProps) {
                 <span className={styles.priceVal}>{pkg.price}</span>
                 <span className={styles.pricePeriod}>/ month</span>
               </div>
-              <ul className={styles.featuresList}>
-                {pkg.features.map((feat, fIdx) => (
-                  <li
-                    key={fIdx}
-                    className={`${styles.featureItem} ${!feat.included ? styles.featureDisabled : ""}`}
-                  >
-                    {feat.included ? (
-                      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    ) : (
-                      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    )}
-                    <span>{feat.name}</span>
-                  </li>
-                ))}
-              </ul>
+              {pkg.features && (
+                <ul className={styles.featuresList}>
+                  {pkg.features.map((feat, fIdx) => (
+                    <li
+                      key={fIdx}
+                      className={`${styles.featureItem} ${!feat.included ? styles.featureDisabled : ""}`}
+                    >
+                      {feat.included ? (
+                        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                        </svg>
+                      ) : (
+                        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      )}
+                      <span>{feat.name}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
               <button
                 className={`${styles.pkgBtn} ${pkg.featured ? styles.pkgBtnFeatured : ""}`}
                 onClick={() => onOpenAudit(`Inquiring about standard package: [${pkg.title}] - price: ${pkg.price}/mo`)}
               >
-                {pkg.ctaText}
+                {pkg.ctaText || "Get Started"}
               </button>
             </div>
           ))}

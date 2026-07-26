@@ -6,8 +6,12 @@ const connectDB = require('./config/db');
 // Load env vars
 dotenv.config({ override: true });
 
-// Connect to database
-connectDB();
+const seedInitialData = require('./utils/seeder');
+
+// Connect to database and seed initial data
+connectDB().then(() => {
+  seedInitialData();
+});
 
 const app = express();
 

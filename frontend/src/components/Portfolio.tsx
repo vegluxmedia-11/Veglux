@@ -1,46 +1,53 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Portfolio.module.css";
+import { getPortfolios, CaseStudy } from "@/lib/services";
 
-interface CaseStudy {
-  tag: string;
-  roi: string;
-  title: string;
-  desc: string;
-  stats: { label: string; value: string }[];
-  chartHeights: number[]; // percentages for bars
-}
+const defaultCaseStudies: CaseStudy[] = [
+  {
+    tag: "E-Commerce",
+    roi: "8.5x ROAS",
+    title: "Scaling Direct-to-Consumer Jewelry Brand",
+    desc: "Architected a custom Meta and Google Catalog funnel to scale purchase volumes globally. Focused heavily on high-converting product hooks and post-click email flows.",
+    stats: [
+      { label: "Ad Spend", value: "₹2.8L" },
+      { label: "Revenue", value: "₹23.8L" },
+      { label: "Purchase CRO", value: "+44%" },
+    ],
+    chartHeights: [20, 35, 60, 95],
+  },
+  {
+    tag: "Real Estate",
+    roi: "7.2x ROI",
+    title: "Premium Residential Villa Lead Generation",
+    desc: "Developed direct-response lead generation funnels for a luxury builder in Rajasthan. Targeted high-net-worth individuals utilizing specific intent-based search filters.",
+    stats: [
+      { label: "Qualified Leads", value: "340+" },
+      { label: "Cost Per Lead", value: "₹280" },
+      { label: "Bookings", value: "11 Villas" },
+    ],
+    chartHeights: [15, 45, 75, 90],
+  },
+];
 
 export default function Portfolio() {
   const [activeCompTab, setActiveCompTab] = useState<"before" | "after">("after");
+  const [caseStudies, setCaseStudies] = useState<CaseStudy[]>(defaultCaseStudies);
 
-  const caseStudies: CaseStudy[] = [
-    {
-      tag: "E-Commerce",
-      roi: "8.5x ROAS",
-      title: "Scaling Direct-to-Consumer Jewelry Brand",
-      desc: "Architected a custom Meta and Google Catalog funnel to scale purchase volumes globally. Focused heavily on high-converting product hooks and post-click email flows.",
-      stats: [
-        { label: "Ad Spend", value: "₹2.8L" },
-        { label: "Revenue", value: "₹23.8L" },
-        { label: "Purchase CRO", value: "+44%" },
-      ],
-      chartHeights: [20, 35, 60, 95],
-    },
-    {
-      tag: "Real Estate",
-      roi: "7.2x ROI",
-      title: "Premium Residential Villa Lead Generation",
-      desc: "Developed direct-response lead generation funnels for a luxury builder in Rajasthan. Targeted high-net-worth individuals utilizing specific intent-based search filters.",
-      stats: [
-        { label: "Qualified Leads", value: "340+" },
-        { label: "Cost Per Lead", value: "₹280" },
-        { label: "Bookings", value: "11 Villas" },
-      ],
-      chartHeights: [15, 45, 75, 90],
-    },
-  ];
+  useEffect(() => {
+    async function loadPortfolio() {
+      try {
+        const data = await getPortfolios();
+        if (data && data.length > 0) {
+          setCaseStudies(data);
+        }
+      } catch (err) {
+        console.warn("Using portfolio fallback data", err);
+      }
+    }
+    loadPortfolio();
+  }, []);
 
   return (
     <section id="portfolio" className={styles.portfolio}>
@@ -54,38 +61,42 @@ export default function Portfolio() {
         {/* Case Studies Grid */}
         <div className={styles.casesGrid}>
           {caseStudies.map((item, idx) => (
-            <div key={idx} className={styles.caseCard}>
+            <div key={item._id || idx} className={styles.caseCard}>
               <div className={styles.caseVisual}>
                 <span className={styles.caseTag}>{item.tag}</span>
                 <span className={styles.roiBadge}>{item.roi}</span>
 
                 {/* Simulated ROI Chart */}
-                <div className={styles.chartSimulator}>
-                  {item.chartHeights.map((h, i) => (
-                    <div
-                      key={i}
-                      className={`${styles.chartBar} ${i === item.chartHeights.length - 1 ? styles.chartBarActive : ""}`}
-                      style={{ height: `${h}%` }}
-                    >
-                      {i === item.chartHeights.length - 1 && (
-                        <span className={styles.chartBarLabel}>{item.roi}</span>
-                      )}
-                    </div>
-                  ))}
-                </div>
+                {item.chartHeights && (
+                  <div className={styles.chartSimulator}>
+                    {item.chartHeights.map((h, i) => (
+                      <div
+                        key={i}
+                        className={`${styles.chartBar} ${i === item.chartHeights.length - 1 ? styles.chartBarActive : ""}`}
+                        style={{ height: `${h}%` }}
+                      >
+                        {i === item.chartHeights.length - 1 && (
+                          <span className={styles.chartBarLabel}>{item.roi}</span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className={styles.caseContent}>
                 <h3 className={styles.caseTitle}>{item.title}</h3>
                 <p className={styles.caseDetails}>{item.desc}</p>
-                <div className={styles.caseStats}>
-                  {item.stats.map((st, sIdx) => (
-                    <div key={sIdx} className={styles.statItem}>
-                      <span className={styles.statValue}>{st.value}</span>
-                      <span className={styles.statLabel}>{st.label}</span>
-                    </div>
-                  ))}
-                </div>
+                {item.stats && (
+                  <div className={styles.caseStats}>
+                    {item.stats.map((st, sIdx) => (
+                      <div key={sIdx} className={styles.statItem}>
+                        <span className={styles.statValue}>{st.value}</span>
+                        <span className={styles.statLabel}>{st.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           ))}

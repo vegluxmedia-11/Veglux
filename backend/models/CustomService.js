@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const CustomServiceSchema = new mongoose.Schema({
+  idName: {
+    type: String,
+    trim: true
+  },
   name: {
     type: String,
     required: [true, 'Please add service name']
